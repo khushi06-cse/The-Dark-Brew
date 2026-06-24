@@ -552,34 +552,54 @@ async function placeOrder() {
 }
 </script>
 
-// --- NAYA PYTHON BRIDGE (FIXED) ---
-    async function handleUserChat(userText) {
-        if (!userText.trim()) return;
-
-        const chatBody = document.querySelector('.chat-body');
-        
-        // 1. User ka message UI mein add karein
-        chatBody.innerHTML += `<div class="msg user" style="background: #333; color: white; padding: 12px; align-self: flex-end; border-radius: 8px; margin-bottom: 10px;">${userText}</div>`;
-
-        try {
-            // 2. Python Backend (FastAPI) ko data bhejein
-           const response = await fetch("https://the-dark-brew.onrender.com/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: userText })
-            });
-
-            const data = await response.json();
-
-            // 3. Backend se mila jawab dikhayein
-            chatBody.innerHTML += `<div class="msg bot" style="background: #1c1c22; color: white; padding: 12px; align-self: flex-start; border-radius: 8px; margin-bottom: 10px;">${data.reply}</div>`;
+<script>
+        // --- NAYA PYTHON BRIDGE (FIXED) ---
+        async function handleUserChat(userText) {
+            if (!userText.trim()) return;
+            const chatBody = document.querySelector('.chat-body');
             
-            // Scroll niche le jayein
-            chatBody.scrollTop = chatBody.scrollHeight;
-        } catch (error) {
-            chatBody.innerHTML += `<div class="msg bot" style="color:red; padding: 10px;">Error: Server not connected. Check backend!</div>`;
+            // 1. User ka message UI mein add karein
+            chatBody.innerHTML += `<div class="msg user" style="background:#333; color:white; padding: 12px;">${userText}</div>`;
+            
+            try {
+                // 2. Python Backend (FastAPI) ko data bhejein
+                const response = await fetch("https://the-dark-brew.onrender.com/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: userText })
+                });
+                
+                const data = await response.json();
+                
+                // 3. Backend se mila jawab dikhayein
+                chatBody.innerHTML += `<div class="msg bot" style="background:#1c1c22; color:white; padding: 12px;">${data.reply}</div>`;
+                
+                // Scroll niche le jayein
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } catch (error) {
+                chatBody.innerHTML += `<div class="msg bot" style="color:red; padding: 10px;">Error: Server not connected. Check backend!</div>`;
+            }
         }
-    }
+
+        // --- TABLE BOOKING FUNCTION ---
+        function confirmTableBooking(event) {
+            event.preventDefault();
+
+            // Inputs se data nikaalna
+            const fullName = document.querySelector('input[placeholder="John Doe"]').value.trim();
+            const phoneInput = document.getElementById("phone_number").value.trim();
+            const bookingDate = document.querySelector('input[type="date"]').value;
+            const bookingTime = document.querySelector('input[type="time"]').value;
+
+            // Validation check
+            if (phoneInput.length !== 10) {
+                alert("Kripya ek sahi 10-digit ka phone number enter karein!");
+                return;
+            }
+
+            // Professional Booking Alert Popup
+            alert(`🎉 TABLE BOOKING CONFIRMED!\n----------------------------------\nName: ${fullName}\nPhone: +91 ${phoneInput}\nDate: ${bookingDate}\nTime: ${bookingTime}\n----------------------------------\n\nAapki table reserve kar di gayi hai. The Dark Brew cafe mein aapka swagat hai! ☕`);
+        }
     </script>
 </body>
 </html>
