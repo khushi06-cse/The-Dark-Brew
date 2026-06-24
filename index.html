@@ -412,17 +412,87 @@
     </footer>
 
   <script>
-   async function placeOrder() {
+async function placeOrder() {
     // 1. Saare menu items aur unki sahi price ki list
     const menuPrices = {
+        // Special Coffee & Artisan Bites
+        "Midnight Latte": 210,
+        "Neon Cold Brew": 240,
+        "Smoked Artisan Croissant": 160,
+        "Cyber Espresso": 140,
+        "Shadow Mocha": 250,
+        "Glitch Matcha Latte": 280,
+        "Dark Roast Macchiato": 190,
+        "Binary Cappuccino": 220,
+        "AI Cold Irish Coffee": 270,
+        "Crimson Hack Mocktail": 180,
+        "Node.js Hot Chocolate": 230,
+        "Quantum Glazed Donut": 120,
+
+        // Premium Shakes
         "Thick Belgian Chocolate": 220,
         "Oreo Cookie Crunch": 240,
         "Strawberry Cheesecake": 260,
         "Classic Vanilla Bean": 190,
         "Nutella Hazelnut Blast": 280,
         "Peanut Butter Banana": 250,
-        "Wild Blueberry Shake": 270
-        // Agar koi aur item bhi hai toh aap use bhi yahan "Item Name": Price karke jod sakti hain
+        "Wild Blueberry Shake": 270,
+
+        // Cyber Burgers
+        "Classic Veggie Crunch": 150,
+        "Spicy Paneer Tikka": 190,
+        "Double Cheese Overload": 220,
+        "Mushroom Truffle Burger": 240,
+        "Mexican Jalapeno": 180,
+        "The Firewall Special": 280,
+
+        // Artisan Pizzas (10")
+        "Server Margherita": 290,
+        "Farmhouse Network": 350,
+        "Peppy Paneer Packet": 380,
+        "Smoked BBQ Mushroom": 360,
+        "Four Cheese Override": 420,
+        "Spicy Veggie Supreme": 390,
+
+        // Noodles & Pasta
+        "Street Style Hakka Noodles": 180,
+        "Chilli Garlic Noodles": 200,
+        "Schezwan Pan Fried": 220,
+        "Penne Arrabbiata (Red)": 260,
+        "Alfredo Mushroom (White)": 280,
+        "Creamy Pesto Spaghetti": 290,
+        "Baked Mac & Cheese": 310,
+
+        // Quick Bites
+        "Bombay Grill Sandwich": 140,
+        "Spinach & Corn Club": 170,
+        "Paneer Tikka Sandwich": 190,
+        "Classic Salted Fries": 110,
+        "Cheesy Jalapeno Poppers": 160,
+        "Garlic Bread with Cheese": 150,
+
+        // Fresh Juices & Coolers
+        "Fresh Orange Juice": 140,
+        "Watermelon Sugar Cooler": 130,
+        "Green Apple Detox": 160,
+        "Classic Virgin Mojito": 150,
+        "Blue Lagoon": 160,
+        "Peach Iced Tea": 140,
+
+        // Classic Hot Coffees
+        "Terminal Espresso": 100,
+        "Admin Americano": 120,
+        "Classic Cappuccino": 150,
+        "Flat White": 160,
+        "Dark Cafe Latte": 170,
+        "Irish Nut Cafe": 190,
+
+        // Brownies & Desserts
+        "Walnut Fudge Brownie": 140,
+        "Sizzling Brownie w/ Ice Cream": 220,
+        "Molten Choco Lava": 150,
+        "Classic Tiramisu": 260,
+        "Blueberry Cheesecake Slice": 240
     };
 
     // 2. Form se Name aur Quantity nikalna
@@ -434,7 +504,7 @@
         return;
     }
 
-    // 3. Menu se price dhoondna (chahe capital likha ho ya small, yeh sahi dhoondega)
+    // 3. Menu se price dhoondna (chahe small letter likha ho ya capital, dhoond nikalega)
     const matchedItem = Object.keys(menuPrices).find(
         key => key.toLowerCase() === inputName.toLowerCase()
     );
@@ -448,16 +518,16 @@
     const pricePerItem = menuPrices[matchedItem];
     const totalBill = quantity * pricePerItem;
 
-    // 5. Customer ko Bill Summary dikhana
-    alert(`🛒 Bill Summary:\n----------------------\nItem: ${matchedItem}\nRate: ₹${pricePerItem}\nQty: ${quantity}\nTotal Bill: ₹${totalBill}\n----------------------\n\nOrder confirm karne ke liye OK dabayein.`);
+    // 5. Customer ko Bada aur Professional Bill Summary dikhana (Boring popup se chhutkara)
+    alert(`🛒 THE DARK BREW - BILL SUMMARY\n----------------------------------\nItem Name: ${matchedItem}\nPrice per Item: ₹${pricePerItem}\nQuantity: ${quantity} nos\n----------------------------------\nTOTAL AMOUNT: ₹${totalBill}\n----------------------------------\n\nOrder confirm karne aur kitchen mein bhejne ke liye OK dabayein.`);
 
     try {
-        // 6. Backend ko data bhej bhejenge
+        // 6. Backend ko data send karna
         const orderSummary = `${matchedItem} (${quantity} nos) - Total: ₹${totalBill}`;
         const response = await fetch(`https://the-dark-brew.onrender.com/api/order?item_name=${encodeURIComponent(orderSummary)}`);
         const data = await response.text();
         
-        alert("🎉 Order Placed Successfully! Cafe kitchen mein aapka order bhej diya gaya hai.");
+        alert("🎉 Order Placed Successfully! Cafe kitchen mein aapka bill aur order bhej diya gaya hai.");
     } catch (error) {
         alert("Error: Backend se connect nahi ho paya!");
         console.error("Fetch Error:", error);
