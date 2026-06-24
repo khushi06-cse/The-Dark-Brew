@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dark Brew | Cyber Cafe & AI Lounge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ========================================== */
+        /* ORIGINAL CSS (RESTORED)                    */
+        /* ========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg-dark: #0a0a0c; --card-bg: #141418; --accent-neon: #ff5e3a; --text-main: #f3f4f6; --text-muted: #9ca3af; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 8%; background: rgba(10, 10, 12, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: white; letter-spacing: 1px; cursor: pointer; }
+        .logo span { color: var(--accent-neon); }
+        .nav-links { display: flex; list-style: none; gap: 35px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 15px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a:hover { color: var(--accent-neon); }
+
+        /* Dashboard Button Inside Navbar Styling */
+        .dashboard-trigger { background: rgba(255, 94, 58, 0.1); border: 1px solid var(--accent-neon); padding: 8px 16px; border-radius: 50px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--accent-neon); transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .dashboard-trigger:hover { background: var(--accent-neon); color: white; }
+
+        .hero { height: 85vh; background: linear-gradient(rgba(10, 10, 12, 0.75), rgba(10, 10, 12, 0.9)), url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        .hero h1 { font-family: 'Syne', sans-serif; font-size: 64px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: var(--accent-neon); text-shadow: 0 0 20px rgba(255, 94, 58, 0.3); }
+        .hero p { font-size: 18px; color: var(--text-muted); margin-bottom: 35px; max-width: 650px; }
+        .btn-neon { display: inline-block; padding: 14px 35px; background-color: var(--accent-neon); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 94, 58, 0.4); }
+
+        section { padding: 100px 8% 60px 8%; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-family: 'Syne', sans-serif; font-size: 40px; margin-bottom: 15px; }
+        .section-header p { color: var(--text-muted); }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        .premium-card { background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.03); transition: 0.4s; }
+        .img-wrapper { width: 100%; height: 250px; overflow: hidden; }
+        .premium-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .premium-card:hover img { transform: scale(1.08); }
+        .card-content { padding: 25px; }
+        .card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .price { font-size: 20px; font-weight: 700; }
+        .price span { color: var(--accent-neon); }
+        .add-btn { width: 40px; height: 40px; border-radius: 50px; background: rgba(255, 94, 58, 0.1); color: var(--accent-neon); display: flex; justify-content: center; align-items: center; cursor: pointer; }
+
+        /* MENU BOOK STYLE SETUP */
+        .menu-book-container { margin-top: 100px; padding-top: 80px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .menu-book-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 60px 40px; }
+        .menu-category { background: transparent; }
+        .category-title { font-family: 'Syne', sans-serif; font-size: 26px; color: var(--accent-neon); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(255, 94, 58, 0.3); padding-bottom: 10px; }
+        .menu-item-row { display: flex; align-items: baseline; margin-bottom: 16px; transition: 0.3s; }
+        .menu-item-row:hover .item-name { color: var(--accent-neon); }
+        .item-name { font-weight: 500; font-size: 17px; color: var(--text-main); transition: 0.3s; }
+        .item-dots { flex-grow: 1; border-bottom: 2px dotted rgba(255, 255, 255, 0.15); margin: 0 15px; position: relative; top: -4px; }
+        .item-price { font-weight: 700; color: white; font-size: 17px; font-family: 'Syne', sans-serif; }
+
+        .booking-section { background: linear-gradient(to bottom, var(--bg-dark), #111115); }
+        .booking-container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+        .form-group input, .form-group select { padding: 14px; background: #1c1c22; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; color: white; font-family: inherit; font-size: 15px; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent-neon); box-shadow: 0 0 10px rgba(255, 94, 58, 0.2); }
+        .booking-form button { grid-column: span 2; padding: 16px; background: var(--accent-neon); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+
+        .bot-widget { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
+        .bot-launcher { width: 60px; height: 60px; border-radius: 50%; background: var(--accent-neon); color: white; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; }
+        .chat-window { position: absolute; bottom: 80px; right: 0; width: 360px; height: 480px; background: var(--card-bg); border-radius: 16px; display: none; flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .chat-window.active { display: flex; }
+        .chat-header { background: #1c1c22; padding: 15px 20px; display: flex; align-items: center; gap: 12px; }
+        .msg.bot { background: #1c1c22; color: var(--text-main); padding: 12px; align-self: flex-start; border-radius: 8px; margin: 10px; }
+        footer { background-color: #050507; padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 14px; }
+        
+        .dashboard-overlay { position: fixed; top: 0; left: -100%; width: 100%; height: 100vh; background: #0a0a0c; z-index: 99999; display: flex; transition: 0.5s; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">DARK<span>BREW.</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#book">Book Table</a></li>
+            <!-- Placed inside the nav to prevent layout overlay issues -->
+            <li>
+                <div class="dashboard-trigger" onclick="toggleDashboard()">
+                    <i class="fa-solid fa-chart-pie"></i> Admin Dashboard
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="hero" id="home">
+        <h1>Crafted In The <span>Shadows</span>, Served Hot</h1>
+        <p>Experience the ultimate premium dark aesthetic mood paired with handcrafted specialty coffee brewed perfectly by experts.</p>
+        <a href="#menu" class="btn-neon">View Premium Menu</a>
+    </div>
+
+    <section id="menu">
+        <div class="section-header">
+            <h2>Signature Brews</h2>
+            <p>Carefully picked coffee beans roasted to dark perfection.</p>
+        </div>
+        <div class="grid-container">
+            <!-- Image Cards -->
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80" alt="Midnight Latte"></div><div class="card-content"><h3>Midnight Latte</h3><p>Velvety steamed milk poured over an intense ristretto shot.</p><div class="card-bottom"><div class="price"><span>₹</span>210</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80" alt="Neon Cold Brew"></div><div class="card-content"><h3>Neon Cold Brew</h3><p>14-hour slow steeped specialty cold brew coffee.</p><div class="card-bottom"><div class="price"><span>₹</span>240</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" alt="Smoked Artisan Croissant"></div><div class="card-content"><h3>Smoked Artisan Croissant</h3><p>Flaky butter pastry infused with subtle wood-fire smoke.</p><div class="card-bottom"><div class="price"><span>₹</span>160</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" alt="Cyber Espresso"></div><div class="card-content"><h3>Cyber Espresso</h3><p>Pure, intense extraction of dark roasted Arabica beans.</p><div class="card-bottom"><div class="price"><span>₹</span>140</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80" alt="Shadow Mocha"></div><div class="card-content"><h3>Shadow Mocha</h3><p>Rich espresso blended with dark Belgian chocolate premium syrup.</p><div class="card-bottom"><div class="price"><span>₹</span>250</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80" alt="Glitch Matcha Latte"></div><div class="card-content"><h3>Glitch Matcha Latte</h3><p>Authentic Japanese green tea matcha whisked with oat milk.</p><div class="card-bottom"><div class="price"><span>₹</span>280</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=600&q=80" alt="Dark Roast Macchiato"></div><div class="card-content"><h3>Dark Roast Macchiato</h3><p>Espresso marked with a delicate dollop of velvety foam.</p><div class="card-bottom"><div class="price"><span>₹</span>190</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=600&q=80" alt="Binary Cappuccino"></div><div class="card-content"><h3>Binary Cappuccino</h3><p>Equal parts espresso, steamed milk, and heavy wet foam.</p><div class="card-bottom"><div class="price"><span>₹</span>220</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="AI Cold Irish Coffee"></div><div class="card-content"><h3>AI Cold Irish Coffee</h3><p>Non-alcoholic irish cream blend served over clear ice blocks.</p><div class="card-bottom"><div class="price"><span>₹</span>270</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" alt="Crimson Hack Mocktail"></div><div class="card-content"><h3>Crimson Hack Mocktail</h3><p>Zesty blood orange mixed with fresh mint and sparkling soda.</p><div class="card-bottom"><div class="price"><span>₹</span>180</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80" alt="Node.js Hot Chocolate"></div><div class="card-content"><h3>Node.js Hot Chocolate</h3><p>Pure melted dark chocolate fudge with a marshmallow top.</p><div class="card-bottom"><div class="price"><span>₹</span>230</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+            <div class="premium-card"><div class="img-wrapper"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80" alt="Quantum Glazed Donut"></div><div class="card-content"><h3>Quantum Glazed Donut</h3><p>Dark chocolate coated donut sprinkled with charcoal sugar dust.</p><div class="card-bottom"><div class="price"><span>₹</span>120</div><div class="add-btn"><i class="fa-solid fa-plus"></i></div></div></div></div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TEXT MENU BOOK LAYOUT                  -->
+        <!-- ========================================== -->
+        <div class="menu-book-container">
+            <div class="section-header">
+                <h2>The Extended <span>Vault</span></h2>
+                <p>Complete selection of our premium dark offerings</p>
+            </div>
+            <div class="menu-book-grid">
+                </div>
+
+            <div class="order-section" style="margin-top: 30px; text-align: center;">
+                <h3>Place Your Order</h3>
+                <input type="text" id="item_name" placeholder="Item Name">
+                <input type="number" id="quantity" placeholder="Quantity">
+                <button onclick="placeOrder()">Order Now</button>
+            </div>
+            
+            <div class="menu-book-grid">
+                
+                <!-- Category 1: Premium Shakes -->
+                <div class="menu-category">
+                    <h3 class="category-title">Premium Shakes</h3>
+                    <div class="menu-item-row"><span class="item-name">Thick Belgian Chocolate</span><div class="item-dots"></div><span class="item-price">₹220</span></div>
+                    <div class="menu-item-row"><span class="item-name">Oreo Cookie Crunch</span><div class="item-dots"></div><span class="item-price">₹240</span></div>
+                    <div class="menu-item-row"><span class="item-name">Strawberry Cheesecake</span><div class="item-dots"></div><span class="item-price">₹260</span></div>
+                    <div class="menu-item-row"><span class="item-name">Classic Vanilla Bean</span><div class="item-dots"></div><span class="item-price">₹190</span></div>
+                    <div class="menu-item-row"><span class="item-name">Nutella Hazelnut Blast</span><div class="item-dots"></div><span class="item-price">₹280</span></div>
+                    <div class="menu-item-row"><span class="item-name">Peanut Butter Banana</span><div class="item-dots"></div><span class="item-price">₹250</span></div>
+                    <div class="menu-item-row"><span class="item-name">Wild Blueberry Shake</span><div class="item-dots"></div><span class="item-price">₹270</span></div>
+                </div>
+
+                <!-- Category 2: Classic Burgers -->
+                <div class="menu-category">
+                    <h3 class="category-title">Cyber Burgers</h3>
+                    <div class="menu-item-row"><span class="item-name">Classic Veggie Crunch</span><div class="item-dots"></div><span class="item-price">₹150</span></div>
+                    <div class="menu-item-row"><span class="item-name">Spicy Paneer Tikka</span><div class="item-dots"></div><span class="item-price">₹190</span></div>
+                    <div class="menu-item-row"><span class="item-name">Double Cheese Overload</span><div class="item-dots"></div><span class="item-price">₹220</span></div>
+                    <div class="menu-item-row"><span class="item-name">Mushroom Truffle Burger</span><div class="item-dots"></div><span class="item-price">₹240</span></div>
+                    <div class="menu-item-row"><span class="item-name">Mexican Jalapeno</span><div class="item-dots"></div><span class="item-price">₹180</span></div>
+                    <div class="menu-item-row"><span class="item-name">The Firewall Special</span><div class="item-dots"></div><span class="item-price">₹280</span></div>
+                </div>
+
+                <!-- Category 3: Artisan Pizzas -->
+                <div class="menu-category">
+                    <h3 class="category-title">Artisan Pizzas (10")</h3>
+                    <div class="menu-item-row"><span class="item-name">Server Margherita</span><div class="item-dots"></div><span class="item-price">₹290</span></div>
+                    <div class="menu-item-row"><span class="item-name">Farmhouse Network</span><div class="item-dots"></div><span class="item-price">₹350</span></div>
+                    <div class="menu-item-row"><span class="item-name">Peppy Paneer Packet</span><div class="item-dots"></div><span class="item-price">₹380</span></div>
+                    <div class="menu-item-row"><span class="item-name">Smoked BBQ Mushroom</span><div class="item-dots"></div><span class="item-price">₹360</span></div>
+                    <div class="menu-item-row"><span class="item-name">Four Cheese Override</span><div class="item-dots"></div><span class="item-price">₹420</span></div>
+                    <div class="menu-item-row"><span class="item-name">Spicy Veggie Supreme</span><div class="item-dots"></div><span class="item-price">₹390</span></div>
+                </div>
+
+                <!-- Category 4: Noodles & Pasta -->
+                <div class="menu-category">
+                    <h3 class="category-title">Noodles & Pasta</h3>
+                    <div class="menu-item-row"><span class="item-name">Street Style Hakka Noodles</span><div class="item-dots"></div><span class="item-price">₹180</span></div>
+                    <div class="menu-item-row"><span class="item-name">Chilli Garlic Noodles</span><div class="item-dots"></div><span class="item-price">₹200</span></div>
+                    <div class="menu-item-row"><span class="item-name">Schezwan Pan Fried</span><div class="item-dots"></div><span class="item-price">₹220</span></div>
+                    <div class="menu-item-row"><span class="item-name">Penne Arrabbiata (Red)</span><div class="item-dots"></div><span class="item-price">₹260</span></div>
+                    <div class="menu-item-row"><span class="item-name">Alfredo Mushroom (White)</span><div class="item-dots"></div><span class="item-price">₹280</span></div>
+                    <div class="menu-item-row"><span class="item-name">Creamy Pesto Spaghetti</span><div class="item-dots"></div><span class="item-price">₹290</span></div>
+                    <div class="menu-item-row"><span class="item-name">Baked Mac & Cheese</span><div class="item-dots"></div><span class="item-price">₹310</span></div>
+                </div>
+
+                <!-- Category 5: Quick Bites & Sandwiches -->
+                <div class="menu-category">
+                    <h3 class="category-title">Quick Bites</h3>
+                    <div class="menu-item-row"><span class="item-name">Bombay Grill Sandwich</span><div class="item-dots"></div><span class="item-price">₹140</span></div>
+                    <div class="menu-item-row"><span class="item-name">Spinach & Corn Club</span><div class="item-dots"></div><span class="item-price">₹170</span></div>
+                    <div class="menu-item-row"><span class="item-name">Paneer Tikka Sandwich</span><div class="item-dots"></div><span class="item-price">₹190</span></div>
+                    <div class="menu-item-row"><span class="item-name">Classic Salted Fries</span><div class="item-dots"></div><span class="item-price">₹110</span></div>
+                    <div class="menu-item-row"><span class="item-name">Cheesy Jalapeno Poppers</span><div class="item-dots"></div><span class="item-price">₹160</span></div>
+                    <div class="menu-item-row"><span class="item-name">Garlic Bread with Cheese</span><div class="item-dots"></div><span class="item-price">₹150</span></div>
+                </div>
+
+                <!-- Category 6: Cold Beverages & Juices -->
+                <div class="menu-category">
+                    <h3 class="category-title">Fresh Juices & Coolers</h3>
+                    <div class="menu-item-row"><span class="item-name">Fresh Orange Juice</span><div class="item-dots"></div><span class="item-price">₹140</span></div>
+                    <div class="menu-item-row"><span class="item-name">Watermelon Sugar Cooler</span><div class="item-dots"></div><span class="item-price">₹130</span></div>
+                    <div class="menu-item-row"><span class="item-name">Green Apple Detox</span><div class="item-dots"></div><span class="item-price">₹160</span></div>
+                    <div class="menu-item-row"><span class="item-name">Classic Virgin Mojito</span><div class="item-dots"></div><span class="item-price">₹150</span></div>
+                    <div class="menu-item-row"><span class="item-name">Blue Lagoon</span><div class="item-dots"></div><span class="item-price">₹160</span></div>
+                    <div class="menu-item-row"><span class="item-name">Peach Iced Tea</span><div class="item-dots"></div><span class="item-price">₹140</span></div>
+                </div>
+
+                <!-- Category 7: Essential Hot Coffees -->
+                <div class="menu-category">
+                    <h3 class="category-title">Classic Hot Coffees</h3>
+                    <div class="menu-item-row"><span class="item-name">Terminal Espresso</span><div class="item-dots"></div><span class="item-price">₹100</span></div>
+                    <div class="menu-item-row"><span class="item-name">Admin Americano</span><div class="item-dots"></div><span class="item-price">₹120</span></div>
+                    <div class="menu-item-row"><span class="item-name">Classic Cappuccino</span><div class="item-dots"></div><span class="item-price">₹150</span></div>
+                    <div class="menu-item-row"><span class="item-name">Flat White</span><div class="item-dots"></div><span class="item-price">₹160</span></div>
+                    <div class="menu-item-row"><span class="item-name">Dark Cafe Latte</span><div class="item-dots"></div><span class="item-price">₹170</span></div>
+                    <div class="menu-item-row"><span class="item-name">Irish Nut Cafe</span><div class="item-dots"></div><span class="item-price">₹190</span></div>
+                </div>
+
+                <!-- Category 8: Desserts & Brownies -->
+                <div class="menu-category">
+                    <h3 class="category-title">Brownies & Desserts</h3>
+                    <div class="menu-item-row"><span class="item-name">Walnut Fudge Brownie</span><div class="item-dots"></div><span class="item-price">₹140</span></div>
+                    <div class="menu-item-row"><span class="item-name">Sizzling Brownie w/ Ice Cream</span><div class="item-dots"></div><span class="item-price">₹220</span></div>
+                    <div class="menu-item-row"><span class="item-name">Molten Choco Lava</span><div class="item-dots"></div><span class="item-price">₹150</span></div>
+                    <div class="menu-item-row"><span class="item-name">Classic Tiramisu</span><div class="item-dots"></div><span class="item-price">₹260</span></div>
+                    <div class="menu-item-row"><span class="item-name">Blueberry Cheesecake Slice</span><div class="item-dots"></div><span class="item-price">₹240</span></div>
+                    <div class="menu-item-row"><span class="item-name">Red Velvet Pastry</span><div class="item-dots"></div><span class="item-price">₹180</span></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="booking-section" id="book">
+        <div class="section-header">
+            <h2>Reserve A Lounge Table</h2>
+            <p>Skip the queue and book your premium spot instantly.</p>
+        </div>
+        <div class="booking-container">
+            <form class="booking-form" onsubmit="event.preventDefault(); alert('Table Booking Request Sent!');">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label>Select Date</label>
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Select Time</label>
+                    <input type="time" required>
+                </div>
+                <div class="form-group full-width">
+                    <label>Number of Guests</label>
+                    <select required>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons (Standard Couple)</option>
+                        <option value="4">4 Persons (Lounge Group)</option>
+                        <option value="6">6+ Persons (Private Lounge)</option>
+                    </select>
+                </div>
+                <button type="submit">Confirm Reservation</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="dashboard-overlay" id="adminDashboard">
+        <div id="lockScreen" style="position: absolute; width: 100%; height: 100%; background: #0a0a0c; z-index: 100000; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="background: #141418; padding: 40px; border-radius: 20px; border: 1px solid var(--accent-neon); text-align: center;">
+                <h2 style="color: white; margin-bottom: 20px; font-family: 'Syne';">Admin Access</h2>
+                <input type="password" id="adminPass" style="padding: 12px; background: #111; color: white; border: 1px solid #333; text-align: center; letter-spacing: 5px;">
+                <button onclick="unlockDashboard()" style="background: var(--accent-neon); color: white; border: none; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer; font-weight: bold;">Unlock</button>
+            </div>
+        </div>
+        <div style="width: 260px; background: #111115; padding: 40px; border-right: 1px solid rgba(255,255,255,0.05);">
+            <h2 style="color: white; font-family: 'Syne';">DARK<span>BREW.</span></h2>
+            <div onclick="toggleDashboard()" style="margin-top: 100px; color: #666; cursor: pointer;"><i class="fa-solid fa-arrow-left"></i> Exit Dashboard</div>
+        </div>
+        <div style="flex-grow: 1; padding: 50px; overflow-y: auto; font-family: 'Space Grotesk';">
+            <h1 style="font-family: 'Syne'; margin-bottom: 40px; color: white;">Admin Central</h1>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div style="background: #141418; padding: 30px; border-radius: 12px;"><h3>Bookings</h3><p style="font-size: 48px; color: var(--accent-neon); font-weight: 700;">48</p></div>
+                <div style="background: #141418; padding: 30px; border-radius: 12px;"><h3>AI Logs</h3><p style="font-size: 48px; color: var(--accent-neon); font-weight: 700;">312</p></div>
+                <div style="background: #141418; padding: 30px; border-radius: 12px;"><h3>Traffic</h3><p style="font-size: 48px; color: var(--accent-neon); font-weight: 700;">1,240</p></div>
+            </div>
+        </div>
+    </div>
+
+   <div class="bot-widget">
+        <div class="bot-launcher" onclick="toggleChat()"><i class="fa-solid fa-comment-dots"></i></div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header"><h4>BrewAI Assistant</h4></div>
+            
+            <div class="chat-body" style="flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column;">
+                <div class="msg bot" style="background: #1c1c22; color: white; padding: 12px; align-self: flex-start; border-radius: 8px; margin-bottom: 10px;">Welcome to the shadows. How can I help?</div>
+            </div>
+
+            <div class="chat-input-area" style="padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; background: #0a0a0c; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                <input type="text" id="chatInput" placeholder="Ask about menu, price..." 
+                    style="flex-grow: 1; padding: 10px; background: #1c1c22; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 5px; outline: none; font-family: 'Space Grotesk';" 
+                    onkeydown="if(event.key === 'Enter') { handleUserChat(this.value); this.value=''; }">
+                
+                <button onclick="let inp = document.getElementById('chatInput'); handleUserChat(inp.value); inp.value='';" 
+                    style="background: var(--accent-neon); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // --- PURANA LOGIC ---
+    function toggleDashboard() {
+        const db = document.getElementById('adminDashboard');
+        db.style.left = (db.style.left === '0px') ? '-100%' : '0px';
+    }
+    function hashPIN(pin) {
+        let h = 0; for (let i = 0; i < pin.length; i++) h = (h << 5) - h + pin.charCodeAt(i); return h |= 0;
+    }
+    function unlockDashboard() {
+        if(hashPIN(document.getElementById('adminPass').value) === 1509442) {
+            document.getElementById('lockScreen').style.display = 'none';
+        } else { alert('Incorrect PIN'); }
+    }
+    function toggleChat() { document.getElementById('chatWindow').classList.toggle('active'); }
+
+    // --- NAYA PYTHON BRIDGE (FIXED) ---
+    let chatHistory = []; 
+
+    async function handleUserChat(userText) {
+        if (!userText.trim()) return;
+
+        const chatBody = document.querySelector('.chat-body');
+        chatBody.innerHTML += `<div class="msg user" style="background: var(--accent-neon); color: white; padding: 12px; align-self: flex-end; border-radius: 8px; margin: 10px;">${userText}</div>`;
+        chatHistory.push({ role: "user", text: userText });
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    message: userText, 
+                    chatHistory: chatHistory 
+                })
+            });
+
+            const data = await response.json();
+            
+            // Console mein check karo kya aa raha hai
+            console.log("Backend ka data:", data);
+
+            // Response mein se text nikalna
+            const botReply = data.reply || "Error: AI se jawab nahi mila";
+
+            chatBody.innerHTML += `<div class="msg bot" style="background: #1c1c22; color: white; padding: 12px; align-self: flex-start; border-radius: 8px; margin: 10px;">${botReply}</div>`;
+            chatHistory.push({ role: "bot", text: botReply });
+            chatBody.scrollTop = chatBody.scrollHeight;
+        } catch (error) {
+            console.error("Connection Error:", error);
+            document.querySelector('.chat-body').innerHTML += `<div class="msg bot" style="color: red;">Error: Backend connect nahi ho raha.</div>`;
+        }
+    }
+</script>
+    <section id="about-location" style="padding: 80px 8%; background: #0e0e12; border-top: 1px solid rgba(255,255,255,0.05); font-family: 'Space Grotesk', sans-serif;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px;">
+            
+            <div>
+                <h2 style="font-family: 'Syne'; font-size: 28px; color: white; margin-bottom: 20px;">THE DARK <span style="color: var(--accent-neon);">BREW.</span></h2>
+                <p style="color: #9ca3af; font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
+                    A premium cyber lounge and artisan coffee space crafted for midnight thinkers, developers, and creators.
+                </p>
+                <h4 style="color: #ff5e3a; font-family: 'Syne'; margin-bottom: 8px;"><i class="fa-solid fa-location-dot"></i> Find Us At</h4>
+                <p style="color: #f3f4f6; font-size: 15px; line-height: 1.5;">
+                    Plot No. 42, Cyber Arcade,<br>
+                    Near Tech Zone, Industrial Area,<br>
+                    Bikaner, Rajasthan - 334001
+                </p>
+            </div>
+
+            <div>
+                <h3 style="font-family: 'Syne'; font-size: 22px; color: white; margin-bottom: 20px;">Vibe Check (Reviews)</h3>
+                
+                <div style="background: #141418; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 3px solid #ff5e3a;">
+                    <p style="color: #f3f4f6; font-size: 14px; font-style: italic;">"The dark aesthetic is insane. Best place to bring your laptop, grab a Neon Cold Brew, and just code all night."</p>
+                    <span style="color: #ff5e3a; font-size: 12px; display: block; margin-top: 8px;">★ ★ ★ ★ ★ — Amit K.</span>
+                </div>
+
+                <div style="background: #141418; padding: 15px; border-radius: 10px; border-left: 3px solid #ff5e3a;">
+                    <p style="color: #f3f4f6; font-size: 14px; font-style: italic;">"Finally a cafe that understands premium mood lighting and actual good specialty coffee. 10/10 recommended."</p>
+                    <span style="color: #ff5e3a; font-size: 12px; display: block; margin-top: 8px;">★ ★ ★ ★ ★ — Rohan M.</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 The Dark Brew. All rights reserved into the shadows.</p>
+    </footer>
+    <footer>
+        <p>&copy; 2026 The Dark Brew. All rights reserved into the shadows.</p>
+    </footer>
+
+  <script>
+    async function placeOrder() {
+        // 1. Data get karein
+        const itemName = document.getElementById("item_name").value;
+        const quantity = document.getElementById("quantity").value;
+
+        // 2. Alert dekar check karein ki button work kar raha hai ya nahi
+        console.log("Order attempt:", itemName, quantity);
+        
+        if (!itemName || !quantity) {
+            alert("Please enter item name and quantity!");
+            return;
+        }
+
+        try {
+            // 3. API Call
+            const response = await fetch(`http://127.0.0.1:8000/api/order?item_name=${encodeURIComponent(itemName)}&quantity=${quantity}`, {
+                method: "POST"
+            });
+            
+            const data = await response.json();
+            alert(data.message); // Success message
+        } catch (error) {
+            alert("Error: Backend se connect nahi ho paya. Check karein ki server chal raha hai!");
+            console.error("Fetch Error:", error);
+        }
+    }
+
+// --- NAYA PYTHON BRIDGE (FIXED) ---
+    async function handleUserChat(userText) {
+        if (!userText.trim()) return;
+
+        const chatBody = document.querySelector('.chat-body');
+        
+        // 1. User ka message UI mein add karein
+        chatBody.innerHTML += `<div class="msg user" style="background: #333; color: white; padding: 12px; align-self: flex-end; border-radius: 8px; margin-bottom: 10px;">${userText}</div>`;
+
+        try {
+            // 2. Python Backend (FastAPI) ko data bhejein
+            const response = await fetch("http://127.0.0.1:8000/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userText })
+            });
+
+            const data = await response.json();
+
+            // 3. Backend se mila jawab dikhayein
+            chatBody.innerHTML += `<div class="msg bot" style="background: #1c1c22; color: white; padding: 12px; align-self: flex-start; border-radius: 8px; margin-bottom: 10px;">${data.reply}</div>`;
+            
+            // Scroll niche le jayein
+            chatBody.scrollTop = chatBody.scrollHeight;
+        } catch (error) {
+            chatBody.innerHTML += `<div class="msg bot" style="color:red; padding: 10px;">Error: Server not connected. Check backend!</div>`;
+        }
+    }
+    </script>
+</body>
+</html>

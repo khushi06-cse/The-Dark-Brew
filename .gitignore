@@ -1,0 +1,11 @@
+# Ignore Virtual Environment
+backend/venv/
+backend/__pycache__/
+.pytest_cache/
+
+# Ignore Environment Variables (API Keys)
+backend/.env
+
+# Ignore Local Databases (Optional, agar aap empty db chahte hain github par)
+# backend/darkbrew.db
+
