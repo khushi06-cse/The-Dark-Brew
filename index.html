@@ -243,7 +243,7 @@
             <p>Skip the queue and book your premium spot instantly.</p>
         </div>
         <div class="booking-container">
-            <form class="booking-form" onsubmit="event.preventDefault(); alert('Table Booking Request Sent!');">
+            <form class="booking-form" onsubmit="confirmTableBooking(event)"></form>
                 <div class="form-group">
                     <label>Full Name</label>
                     <input type="text" placeholder="John Doe" required>
@@ -580,6 +580,23 @@ async function placeOrder() {
             chatBody.innerHTML += `<div class="msg bot" style="color:red; padding: 10px;">Error: Server not connected. Check backend!</div>`;
         }
     }
-    </script>
+   function confirmTableBooking(event) {
+    event.preventDefault();
+
+    // Inputs se data nikaalna
+    const fullName = document.querySelector('input[placeholder="John Doe"]').value.trim();
+    const phoneInput = document.getElementById("phone_number").value.trim();
+    const bookingDate = document.querySelector('input[type="date"]').value;
+    const bookingTime = document.querySelector('input[type="time"]').value;
+
+    // Validation check
+    if (phoneInput.length !== 10) {
+        alert("Kripya ek sahi 10-digit ka phone number enter karein!");
+        return;
+    }
+// Professional Booking Alert Popup
+    alert(`🎉 TABLE BOOKING CONFIRMED!\n----------------------------------\nName: ${fullName}\nPhone: +91 ${phoneInput}\nDate: ${bookingDate}\nTime: ${bookingTime}\n----------------------------------\n\nAapki table reserve kar di gayi hai. The Dark Brew cafe mein aapka swagat hai! ☕`);
+}
+</script>
 </body>
 </html>
