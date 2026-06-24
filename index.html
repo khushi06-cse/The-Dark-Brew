@@ -492,7 +492,8 @@ async function placeOrder() {
         "Sizzling Brownie w/ Ice Cream": 220,
         "Molten Choco Lava": 150,
         "Classic Tiramisu": 260,
-        "Blueberry Cheesecake Slice": 240
+        "Blueberry Cheesecake Slice": 240,
+        "Red Velvet Pastry": 180
     };
 
     // 2. Form se Name aur Quantity nikalna
@@ -504,7 +505,7 @@ async function placeOrder() {
         return;
     }
 
-    // 3. Menu se price dhoondna (chahe small letter likha ho ya capital, dhoond nikalega)
+    // 3. Menu se price dhoondna
     const matchedItem = Object.keys(menuPrices).find(
         key => key.toLowerCase() === inputName.toLowerCase()
     );
@@ -518,21 +519,26 @@ async function placeOrder() {
     const pricePerItem = menuPrices[matchedItem];
     const totalBill = quantity * pricePerItem;
 
-    // 5. Customer ko Bada aur Professional Bill Summary dikhana (Boring popup se chhutkara)
+    // 5. Customer ko Bill Summary dikhana
     alert(`🛒 THE DARK BREW - BILL SUMMARY\n----------------------------------\nItem Name: ${matchedItem}\nPrice per Item: ₹${pricePerItem}\nQuantity: ${quantity} nos\n----------------------------------\nTOTAL AMOUNT: ₹${totalBill}\n----------------------------------\n\nOrder confirm karne aur kitchen mein bhejne ke liye OK dabayein.`);
 
     try {
         // 6. Backend ko data send karna
         const orderSummary = `${matchedItem} (${quantity} nos) - Total: ₹${totalBill}`;
         const response = await fetch(`https://the-dark-brew.onrender.com/api/order?item_name=${encodeURIComponent(orderSummary)}`);
-        const data = await response.text();
         
+        if (!response.ok) {
+            throw new Error(`Server status: ${response.status}`);
+        }
+        
+        const data = await response.text();
         alert("🎉 Order Placed Successfully! Cafe kitchen mein aapka bill aur order bhej diya gaya hai.");
     } catch (error) {
         alert("Error: Backend se connect nahi ho paya!");
         console.error("Fetch Error:", error);
     }
 }
+</script>
 
 // --- NAYA PYTHON BRIDGE (FIXED) ---
     async function handleUserChat(userText) {
