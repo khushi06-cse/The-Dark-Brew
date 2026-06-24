@@ -412,31 +412,57 @@
     </footer>
 
   <script>
-    async function placeOrder() {
-        // 1. Data get karein
-        const itemName = document.getElementById("item_name").value;
-        const quantity = document.getElementById("quantity").value;
+   async function placeOrder() {
+    // 1. Saare menu items aur unki sahi price ki list
+    const menuPrices = {
+        "Thick Belgian Chocolate": 220,
+        "Oreo Cookie Crunch": 240,
+        "Strawberry Cheesecake": 260,
+        "Classic Vanilla Bean": 190,
+        "Nutella Hazelnut Blast": 280,
+        "Peanut Butter Banana": 250,
+        "Wild Blueberry Shake": 270
+        // Agar koi aur item bhi hai toh aap use bhi yahan "Item Name": Price karke jod sakti hain
+    };
 
-        // 2. Alert dekar check karein ki button work kar raha hai ya nahi
-        console.log("Order attempt:", itemName, quantity);
-        
-        if (!itemName || !quantity) {
-            alert("Please enter item name and quantity!");
-            return;
-        }
+    // 2. Form se Name aur Quantity nikalna
+    const inputName = document.getElementById("item_name").value.trim();
+    const quantity = parseInt(document.getElementById("quantity").value) || 1;
 
-        try {
-            // 3. API Call
-           const response = await fetch(`https://the-dark-brew.onrender.com/api/order?item_name=${encodeURIComponent(itemName)}&quantity=${quantity}`, {
-            });
-            
-            const data = await response.json();
-            alert(data.message); // Success message
-        } catch (error) {
-            alert("Error: Backend se connect nahi ho paya. Check karein ki server chal raha hai!");
-            console.error("Fetch Error:", error);
-        }
+    if (!inputName) {
+        alert("Kripya pehle item ka naam likhein!");
+        return;
     }
+
+    // 3. Menu se price dhoondna (chahe capital likha ho ya small, yeh sahi dhoondega)
+    const matchedItem = Object.keys(menuPrices).find(
+        key => key.toLowerCase() === inputName.toLowerCase()
+    );
+
+    if (!matchedItem) {
+        alert("Maaf kijiye, yeh item hamare menu mein nahi mila! Kripya menu se dekh kar sahi naam likhein.");
+        return;
+    }
+
+    // 4. Sahi Calculation
+    const pricePerItem = menuPrices[matchedItem];
+    const totalBill = quantity * pricePerItem;
+
+    // 5. Customer ko Bill Summary dikhana
+    alert(`🛒 Bill Summary:\n----------------------\nItem: ${matchedItem}\nRate: ₹${pricePerItem}\nQty: ${quantity}\nTotal Bill: ₹${totalBill}\n----------------------\n\nOrder confirm karne ke liye OK dabayein.`);
+
+    try {
+        // 6. Backend ko data bhej bhejenge
+        const orderSummary = `${matchedItem} (${quantity} nos) - Total: ₹${totalBill}`;
+        const response = await fetch(`https://the-dark-brew.onrender.com/api/order?item_name=${encodeURIComponent(orderSummary)}`);
+        const data = await response.text();
+        
+        alert("🎉 Order Placed Successfully! Cafe kitchen mein aapka order bhej diya gaya hai.");
+    } catch (error) {
+        alert("Error: Backend se connect nahi ho paya!");
+        console.error("Fetch Error:", error);
+    }
+}
 
 // --- NAYA PYTHON BRIDGE (FIXED) ---
     async function handleUserChat(userText) {
